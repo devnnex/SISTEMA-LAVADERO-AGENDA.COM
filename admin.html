@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Lavadero</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="admin-layout">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <h2>🧼 Lavadero</h2>
+
+    <button data-section="activos">🚧 Activos</button>
+    <button data-section="gestion">🛠 Servicios</button>
+    <button data-section="ingresos">💰 Ingresos</button>
+    
+
+  </aside>
+
+  <!-- ===== CONTENIDO ===== -->
+  <main class="content">
+
+    <!-- ACTIVOS -->
+    <section id="activos" class="section active">
+      <h3>🚧 Lavados en curso</h3>
+      <div id="lista" class="list"></div>
+    </section>
+
+    <!-- GESTIÓN -->
+    <section id="gestion" class="section">
+      <h3>🛠 Gestión</h3>
+
+      <div class="card">
+        <h4>🧼 Crear servicio</h4>
+        <input id="srvNombre" placeholder="Nombre del servicio">
+        <input id="srvPrecio" type="number" placeholder="Precio">
+        <button id="btnCrearServicio">Agregar servicio</button>
+      </div>
+
+      <div class="card">
+        <h4>🧑‍🔧 Crear trabajador</h4>
+        <input id="trabNombre" placeholder="Nombre del trabajador">
+        <button id="btnCrearTrabajador">Agregar trabajador</button>
+      </div>
+    </section>
+
+    <!-- INGRESOS -->
+    <section id="ingresos" class="section">
+      <h3>💰 Ingresos</h3>
+
+      <div class="kpis">
+        <div class="kpi">
+          <span id="kpiServicios">0</span>
+          <small>Servicios hoy</small>
+        </div>
+        <div class="kpi">
+          <span id="kpiHoy">$0</span>
+          <small>Ingresos hoy</small>
+        </div>
+        <div class="kpi clickable" id="verMes">
+          <span id="kpiMes">$0</span>
+          <small>Ingresos mes</small>
+        </div>
+      </div>
+
+       
+      <input id="buscador" placeholder="Buscar por placa o trabajador">
+
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Placa</th>
+            <th>Servicio</th>
+            <th>Trabajador</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody id="tablaIngresos"></tbody>
+      </table>
+    </section>
+
+  </main>
+</div>
+
+<!-- LOADER GLOBAL -->
+<div id="loader" class="loader hidden">
+  <div class="loader-content">
+    <div class="spinner"></div>
+    <div class="loader-text">Cargando información…</div>
+  </div>
+</div>
+
+
+
+<script src="js/config.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

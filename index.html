@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lavadero de Motos</title>
+
+  <link rel="stylesheet" href="css/index.css">
+
+  <!-- SweetAlert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<main class="app">
+  <header class="header">
+    <h1>🧼 Lavadero</h1>
+    <p>Agenda tu lavado</p>
+  </header>
+
+  <section class="card">
+    <label>Placa de la moto</label>
+    <input type="text" id="placa" placeholder="ABC123">
+
+    <label>Servicio</label>
+    <select id="servicio">
+      <option value="">Cargando servicios...</option>
+    </select>
+
+    <button id="agendar">Agendar Lavado</button>
+  </section>
+</main>
+
+<!-- ORDEN IMPORTANTE -->
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
