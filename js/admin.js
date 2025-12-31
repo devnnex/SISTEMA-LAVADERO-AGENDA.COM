@@ -1,43 +1,70 @@
-const lista = document.getElementById("lista");
+
 
 
 
 /* ===============================
    LAVADOS ACTIVOS
    =============================== */
+
+const lista = document.getElementById("lista");
+const buscadorActivos = document.getElementById("buscadorActivos");
+
+let activosData = [];
+
+/* ---------- Cargar desde API (solo fetch) ---------- */
 function cargarActivos() {
   fetch(`${API_URL}?action=activos`)
     .then(res => res.json())
     .then(data => {
-      lista.innerHTML = "";
-
-      if (!Array.isArray(data) || !data.length) {
-        lista.innerHTML = "<p>No hay lavados activos</p>";
-        return;
-      }
-
-      data.forEach(l => {
-        const div = document.createElement("div");
-        div.className = "item";
-
-        div.innerHTML = `
-          <b>Placa:</b> ${l.placa}<br>
-          <b>Servicio:</b> ${l.servicio}<br>
-          <b>Trabajador:</b> ${l.trabajador}<br>
-          <b>Precio:</b> $${l.precio}<br>
-          <small>${new Date(l.hora).toLocaleTimeString()}</small>
-          <button class="confirm">Confirmar lavado</button>
-        `;
-
-        div.querySelector("button").onclick = () => confirmarLavado(l.id);
-        lista.appendChild(div);
-      });
+      activosData = Array.isArray(data) ? data : [];
+      renderActivos();
     })
     .catch(err => {
       console.error("Error activos:", err);
       lista.innerHTML = "<p>Error cargando lavados</p>";
     });
 }
+
+/* ---------- Render + filtro (buscador) ---------- */
+function renderActivos() {
+  const q = buscadorActivos.value.toLowerCase().trim();
+  lista.innerHTML = "";
+
+  const filtrados = activosData.filter(l =>
+    l.placa.toLowerCase().includes(q)
+  );
+
+  if (!filtrados.length) {
+    lista.innerHTML = "<p>No hay lavados activos</p>";
+    return;
+  }
+
+  filtrados.forEach(l => {
+    const div = document.createElement("div");
+    div.className = "item";
+
+    div.innerHTML = `
+      <b>Placa:</b> ${l.placa}<br>
+      <b>Servicio:</b> ${l.servicio}<br>
+      <b>Trabajador:</b> ${l.trabajador}<br>
+      <b>Precio:</b> $${l.precio}<br>
+      <small>${new Date(l.hora).toLocaleTimeString()}</small>
+      <button class="confirm">Confirmar lavado</button>
+    `;
+
+    div.querySelector("button").onclick = () => confirmarLavado(l.id);
+    lista.appendChild(div);
+  });
+}
+
+/* ---------- Activación del buscador ---------- */
+buscadorActivos.addEventListener("input", renderActivos);
+
+/* ---------- Init ---------- */
+cargarActivos();
+setInterval(cargarActivos, 10000);
+
+
 
 function confirmarLavado(id) {
   if (!confirm("¿Confirmar lavado terminado?")) return;
